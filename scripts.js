@@ -12,25 +12,37 @@ function fetchRecommendations(keyword) {
     fetch('travel_recommendation_api.json')
         .then(response => response.json())
         .then(data => {
-            const results = [];
-            data.countries.forEach(country => {
-                country.cities.forEach(city => {
-                    if (city.name.toLowerCase().includes(keyword) || city.description.toLowerCase().includes(keyword)) {
-                        results.push(city);
-                    }
-                });
+          console.log("Fetched data:", data); // Log the fetched data
+          const results = [];
+          data.countries.forEach((country) => {
+            country.cities.forEach((city) => {
+              if (
+                city.name.toLowerCase().includes(keyword.toLowerCase()) ||
+                city.description.toLowerCase().includes(keyword.toLowerCase())
+              ) {
+                results.push(city);
+              }
             });
-            data.temples.forEach(temple => {
-                if (temple.name.toLowerCase().includes(keyword) || temple.description.toLowerCase().includes(keyword)) {
-                    results.push(temple);
-                }
-            });
-            data.beaches.forEach(beach => {
-                if (beach.name.toLowerCase().includes(keyword) || (beach.description && beach.description.toLowerCase().includes(keyword))) {
-                    results.push(beach);
-                }
-            });
-            displayResults(results);
+          });
+          data.temples.forEach((temple) => {
+            if (
+              temple.name.toLowerCase().includes(keyword.toLowerCase()) ||
+              temple.description.toLowerCase().includes(keyword.toLowerCase())
+            ) {
+              results.push(temple);
+            }
+          });
+          data.beaches.forEach((beach) => {
+            if (
+              beach.name.toLowerCase().includes(keyword.toLowerCase()) ||
+              (beach.description &&
+                beach.description.toLowerCase().includes(keyword.toLowerCase()))
+            ) {
+              results.push(beach);
+            }
+          });
+          console.log("Results:", results); // Log the results
+          displayResults(results);
         })
         .catch(error => console.error('Error fetching data:', error));
 }
